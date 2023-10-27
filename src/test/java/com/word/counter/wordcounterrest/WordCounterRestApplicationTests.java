@@ -1,13 +1,47 @@
 package com.word.counter.wordcounterrest;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.ResponseEntity;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest
-class WordCounterRestApplicationTests {
+public class WordCounterRestApplicationTests {
 
-	@Test
-	void contextLoads() {
+	private WordCounterController controller;
+
+	@BeforeEach
+	public void setUp() {
+		// Initialize the controller with an instance of WordCounter
+		WordCounter wordCounter = new WordCounter();
+		controller = new WordCounterController();
 	}
 
+	@Test
+	public void testGetHighestFrequencyRest() {
+		// Arrange
+		String inputText = "World World World Hello";
+		int expectedFrequency = 3;
+		ResponseEntity response = controller.getHighestFrequencyRest(inputText);
+		assertEquals(ResponseEntity.ok(expectedFrequency), response);
+	}
+
+	@Test
+	public void testCalculateFrequencyForWordRest() {
+		// Arrange
+		String inputText = "World Hello World";
+		String word = "Hello";
+		int expectedFrequency = 1;
+		ResponseEntity response = controller.calculateFrequencyForWordRest(inputText, word);
+		assertEquals(ResponseEntity.ok(expectedFrequency), response);
+	}
+
+	@Test
+	public void testCalculateMostFrequentNWordsRest() {
+		// Arrange
+		String inputText = "World World World Hello Hello Hello";
+		int n = 2;
+		String expectedResponse = "hello 3\rworld 3";
+		ResponseEntity<String> response = controller.calculateMostFrequentNWordsRest(inputText, n);
+		assertEquals(ResponseEntity.ok(expectedResponse), response);
+	}
 }

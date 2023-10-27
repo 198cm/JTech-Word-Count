@@ -2,33 +2,70 @@ package com.word.counter.wordcounterrest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 import java.util.concurrent.atomic.AtomicLong;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class WordCounterController {
 
+    private final WordCounter wordCounter;
 
-    @GetMapping("/calculateHighestFrequency")
-    public int calculateHighestFrequencyRest(@RequestParam(value = "text", defaultValue = "World World") String text) {
-        return new WordCounter().calculateHighestFrequency(text);
+    @Autowired
+    public WordCounterController() {
+        this.wordCounter = new WordCounter();
     }
-
-    @GetMapping("/calculateFrequencyForWord")
-    public int calculateFrequencyForWord(@RequestParam(value = "text", defaultValue = "World") String text, @RequestParam(value = "word", defaultValue = "World") String word) {
-        return new WordCounter().calculateFrequencyForWord(text, word);
-    }
-
-    @GetMapping("/calculateMostFrequentNWords")
-    public String calculateMostFrequentNWords(@RequestParam(value = "text", defaultValue = "World World World Hello hello I") String text, @RequestParam(value = "n", defaultValue = "3") int n) {
-        StringBuilder msg = new StringBuilder();
-        for (WordFrequency word: new WordCounter().calculateMostFrequentNWords(text, n)) {
-            msg.append(word.getWord()).append(" ").append(word.getFrequency()).append("\r");
+    @GetMapping("/v1/calculateHighestFrequency")
+    public ResponseEntity getHighestFrequencyRest(@RequestParam(value = "text", defaultValue = "World World") String text) {
+        if (text == null || text.isEmpty()) {
+            return ResponseEntity.badRequest().body("The 'text' parameter must be provided and not empty.");
         }
 
-        return msg.toString();
+        try {
+            int highestFrequency = wordCounter.calculateHighestFrequency(text);
+            return ResponseEntity.ok(highestFrequency);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An error occurred while processing the request.");
+        }
+    }
+
+    @GetMapping("/v1/calculateFrequencyForWord")
+    public ResponseEntity calculateFrequencyForWordRest(@RequestParam(value = "text", defaultValue = "World") String text, @RequestParam(value = "word", defaultValue = "World") String word) {
+
+        if (text == null || text.isEmpty() || word == null || word.isEmpty()) {
+            return ResponseEntity.badRequest().body("Both 'text' and 'word' must be provided and not empty.");
+        }
+
+        try {
+            int frequencyForWord = wordCounter.calculateFrequencyForWord(text, word);
+            return ResponseEntity.ok(frequencyForWord);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An error occurred while processing the request.");
+        }
+    }
+
+    @GetMapping("/v1/calculateMostFrequentNWords")
+    public ResponseEntity<String> calculateMostFrequentNWordsRest(@RequestParam(value = "text", defaultValue = "World World World Hello hello I") String text, @RequestParam(value = "n", defaultValue = "3") int n) {
+        if (n <= 0) {
+            return ResponseEntity.badRequest().body("Invalid value for 'n'. Please provide a positive integer.");
+        }
+
+        try {
+            StringJoiner msg = new StringJoiner("\r");
+            for (WordFrequency word : wordCounter.calculateMostFrequentNWords(text, n)) {
+                msg.add(word.getWord() + " " + word.getFrequency());
+            }
+            return ResponseEntity.ok(msg.toString());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An error occurred while processing the request.");
+        }
     }
 }
