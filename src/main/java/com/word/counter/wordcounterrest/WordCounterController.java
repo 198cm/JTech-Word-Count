@@ -1,11 +1,7 @@
 package com.word.counter.wordcounterrest;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.StringJoiner;
-import java.util.concurrent.atomic.AtomicLong;
 
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +17,7 @@ public class WordCounterController {
         this.wordCounter = new WordCounter();
     }
     @GetMapping("/v1/calculateHighestFrequency")
-    public ResponseEntity getHighestFrequencyRest(@RequestParam(value = "text", defaultValue = "World World") String text) {
+    public ResponseEntity<?> getHighestFrequencyRest(@RequestParam(value = "text", defaultValue = "World World") String text) {
         if (text == null || text.isEmpty()) {
             return ResponseEntity.badRequest().body("The 'text' parameter must be provided and not empty.");
         }
@@ -36,7 +32,7 @@ public class WordCounterController {
     }
 
     @GetMapping("/v1/calculateFrequencyForWord")
-    public ResponseEntity calculateFrequencyForWordRest(@RequestParam(value = "text", defaultValue = "World") String text, @RequestParam(value = "word", defaultValue = "World") String word) {
+    public ResponseEntity<?> calculateFrequencyForWordRest(@RequestParam(value = "text", defaultValue = "World") String text, @RequestParam(value = "word", defaultValue = "World") String word) {
 
         if (text == null || text.isEmpty() || word == null || word.isEmpty()) {
             return ResponseEntity.badRequest().body("Both 'text' and 'word' must be provided and not empty.");

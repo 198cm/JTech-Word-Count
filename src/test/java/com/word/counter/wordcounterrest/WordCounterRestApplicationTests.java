@@ -11,33 +11,28 @@ public class WordCounterRestApplicationTests {
 
 	@BeforeEach
 	public void setUp() {
-		// Initialize the controller with an instance of WordCounter
-		WordCounter wordCounter = new WordCounter();
 		controller = new WordCounterController();
 	}
 
 	@Test
 	public void testGetHighestFrequencyRest() {
-		// Arrange
 		String inputText = "World World World Hello";
 		int expectedFrequency = 3;
-		ResponseEntity response = controller.getHighestFrequencyRest(inputText);
+		ResponseEntity<?> response = controller.getHighestFrequencyRest(inputText);
 		assertEquals(ResponseEntity.ok(expectedFrequency), response);
 	}
 
 	@Test
 	public void testCalculateFrequencyForWordRest() {
-		// Arrange
 		String inputText = "World Hello World";
 		String word = "Hello";
 		int expectedFrequency = 1;
-		ResponseEntity response = controller.calculateFrequencyForWordRest(inputText, word);
+		ResponseEntity<?> response = controller.calculateFrequencyForWordRest(inputText, word);
 		assertEquals(ResponseEntity.ok(expectedFrequency), response);
 	}
 
 	@Test
 	public void testCalculateMostFrequentNWordsRest() {
-		// Arrange
 		String inputText = "World World World Hello Hello Hello";
 		int n = 2;
 		String expectedResponse = "hello 3\rworld 3";
