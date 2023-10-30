@@ -35,7 +35,7 @@ public class WordCounterRestApplicationTests {
 	public void testCalculateMostFrequentNWordsRest() {
 		String inputText = "World World World Hello Hello Hello";
 		int n = 2;
-		String expectedResponse = "hello 3\rworld 3";
+		String expectedResponse = "hello 3 world 3";
 		ResponseEntity<String> response = controller.calculateMostFrequentNWordsRest(inputText, n);
 		assertEquals(ResponseEntity.ok(expectedResponse), response);
 	}

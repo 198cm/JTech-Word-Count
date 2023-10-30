@@ -54,7 +54,7 @@ public class WordCounterController {
         }
 
         try {
-            StringJoiner msg = new StringJoiner("\r");
+            StringJoiner msg = new StringJoiner(" ");
             for (WordFrequency word : wordCounter.calculateMostFrequentNWords(text, n)) {
                 msg.add(word.getWord() + " " + word.getFrequency());
             }

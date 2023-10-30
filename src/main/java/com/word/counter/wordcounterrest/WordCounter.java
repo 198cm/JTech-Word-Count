@@ -29,7 +29,7 @@ public class WordCounter implements WordFrequencyAnalyzer{
      */
     @Override
     public int calculateFrequencyForWord(String text, String word) {
-        StringTokenizer tokenizer = new StringTokenizer(text, " ,.;\n"); //StringTokenizer doesn't return an array but a single word -> easier in Foreach loops
+        StringTokenizer tokenizer = new StringTokenizer(text, " ,.;%\n"); //StringTokenizer doesn't return an array but a single word -> easier in Foreach loops
         int wordCount = 0;
 
         String lowercaseWord = word.toLowerCase();
@@ -79,7 +79,7 @@ public class WordCounter implements WordFrequencyAnalyzer{
     }
 
     private static Map<String, Integer> getStringIntegerMap(String text) {
-        StringTokenizer tokenizer = new StringTokenizer(text, " ,.;\n");  //StringTokenizer doesn't return an array but a single word -> easier in Foreach loops
+        StringTokenizer tokenizer = new StringTokenizer(text, " ,.;%\n");  //StringTokenizer doesn't return an array but a single word -> easier in Foreach loops
         Map<String, Integer> wordFrequencies = new HashMap<>(); //Map stores the string together with the frequency of a word, makes it easier to store everything in a single object and not have nested for loops
 
         while (tokenizer.hasMoreTokens()) {

@@ -11,7 +11,7 @@ public class WordCounterTests {
     @Test
     public void testCalculateHighestFrequency() {
         WordCounter wordCounter = new WordCounter();
-        String text = "This is a sample text. This text contains some sample words.";
+        String text = "Dit is een voorbeeld text, deze text gebruikt voorbeeld woorden.";
         int highestFrequency = wordCounter.calculateHighestFrequency(text);
         assertEquals(2, highestFrequency);
     }
@@ -19,16 +19,22 @@ public class WordCounterTests {
     @Test
     public void testCalculateFrequencyForWord() {
         WordCounter wordCounter = new WordCounter();
-        String text = "This is a sample text. This text contains some sample words.";
-        int frequency = wordCounter.calculateFrequencyForWord(text, "sample");
+        String text = "Dit is een voorbeeld text, deze text gebruikt voorbeeld woorden.";
+        int frequency = wordCounter.calculateFrequencyForWord(text, "text");
         assertEquals(2, frequency);
     }
 
     @Test
     public void testCalculateMostFrequentNWords() {
         WordCounter wordCounter = new WordCounter();
-        String text = "This is a sample text. This text contains some sample words.";
+        String text = "Dit is een voorbeeld text, deze text gebruikt voorbeeld woorden.";
         List<WordFrequency> mostFrequentWords = wordCounter.calculateMostFrequentNWords(text, 2);
 
+        assertEquals(2, mostFrequentWords.size());
+        assertEquals("text", mostFrequentWords.get(0).getWord());
+        assertEquals(2, mostFrequentWords.get(0).getFrequency());
+        assertEquals("voorbeeld", mostFrequentWords.get(1).getWord());
+        assertEquals(2, mostFrequentWords.get(1).getFrequency());
     }
+
 }

@@ -13,12 +13,9 @@ public class CustomErrorController implements ErrorController {
 
     @RequestMapping("/error")
     @ResponseBody
-    ResponseEntity error(HttpServletRequest request) {
+    ResponseEntity<String> error(HttpServletRequest request) {
         return ResponseEntity.badRequest().body("Mapping error! Please check your parameters for errors.");
     }
 
 
-    public String getErrorPath() {
-        return "/error";
-    }
 }
