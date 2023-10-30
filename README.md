@@ -2,7 +2,7 @@
 
 ### Introduction
 
-This Word Counter REST API, developed using Spring Boot, provides functionality for counting word frequencies based on the specified rules and interfaces. This is my hand-over for the Word Count Java test for the JTech Area within Ordina. 
+This is my hand-over for the Word Count Java test for the JTech Area within Ordina. 
 The project is made using Intelij IDE. THe main project that is made to satisfy the requirements of the assignment is in the folder **"word-counter-rest"**. 
 This folder contains the implementation part of the assignment. The word coutner funcationality together with the API interface made with Springboot.
 
