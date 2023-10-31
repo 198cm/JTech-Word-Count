@@ -60,9 +60,9 @@ public class WordCounter implements WordFrequencyAnalyzer{
 
         // Sort based on frequency, and if they're the same sort based on alphabetical order
         mostFrequentNWords.sort((w1, w2) -> {
-            int freqComparison = Integer.compare(w2.getFrequency(), w1.getFrequency());
+            int freqComparison = Integer.compare(w2.frequency(), w1.frequency());
             if (freqComparison == 0) {
-                return w1.getWord().compareTo(w2.getWord());
+                return w1.word().compareTo(w2.word());
             }
             return freqComparison;
         });
@@ -89,19 +89,4 @@ public class WordCounter implements WordFrequencyAnalyzer{
         return wordFrequencies;
     }
 
-    /**
-     * @return Not usable
-     */
-    @Override
-    public String getWord() {
-        return null;
-    }
-
-    /**
-     * @return Not usable
-     */
-    @Override
-    public int getFrequency() {
-        return 0;
-    }
 }

@@ -1,13 +1,6 @@
 package com.word.counter.wordcounterrest;
 
-public class WordInfo implements WordFrequency{
-    String word;
-    int frequency;
-
-    public WordInfo(String word, int frequency) {
-        this.word = word;
-        this.frequency = frequency;
-    }
+public record WordInfo(String word, int frequency) implements WordFrequency {
 
     /**
      * @return Returns the word of the WordInfo Object
