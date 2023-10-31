@@ -10,7 +10,7 @@ public class WordCounter implements WordFrequencyAnalyzer{
      */
     @Override
     public int calculateHighestFrequency(String text) {
-        Map<String, Integer> wordFrequencies = getStringIntegerMap(text);
+        Map<String, Integer> wordFrequencies = getStringIntegerWordMap(text);
 
         int highestWordCount = 0;
         for (int count : wordFrequencies.values()) {
@@ -50,7 +50,7 @@ public class WordCounter implements WordFrequencyAnalyzer{
      */
     @Override
     public List<WordFrequency> calculateMostFrequentNWords(String text, int n) {
-        Map<String, Integer> wordFrequencies = getStringIntegerMap(text); //Same as in the first function
+        Map<String, Integer> wordFrequencies = getStringIntegerWordMap(text); //Same as in the first function
 
         //Convert Map to Arraylist
         ArrayList<WordInfo> mostFrequentNWords = new ArrayList<>();
@@ -78,7 +78,12 @@ public class WordCounter implements WordFrequencyAnalyzer{
         return result.subList(0, n);
     }
 
-    private static Map<String, Integer> getStringIntegerMap(String text) {
+    /**
+     * This function is used within other functions since the functionality is used multiple times.
+     * @param text The text the function is going to be searching through.
+     * @return a map with all the texts words and their frequencies.
+     */
+    private static Map<String, Integer> getStringIntegerWordMap(String text) {
         StringTokenizer tokenizer = new StringTokenizer(text, " ,.;%\n");  //StringTokenizer doesn't return an array but a single word -> easier for looping
         Map<String, Integer> wordFrequencies = new HashMap<>(); //Map stores the string together with the frequency of a word, makes it easier to store everything in a single object and not have nested for loops
 
