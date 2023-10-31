@@ -1,0 +1,25 @@
+version: '3'
+services:
+  server_app:
+    build:
+      context: ./word-counter-rest # Make sure the context is correct
+      dockerfile: ./src/main/resources/Dockerfile  # Check the path to the Dockerfileword-counter-rest/src/main/resources/Dockerfile  # Path to your Java application's Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - my_network
+
+  client_app:
+    build:
+      context: ./word-counter-client # Make sure the context is correct
+      dockerfile: ./src/main/resources/Dockerfile  # Path to your other application's Dockerfile
+    ports:
+        - "8081:8081"
+    stdin_open: true
+    tty: true
+    networks:
+      - my_network
+
+networks:
+  my_network:
+    driver: bridge

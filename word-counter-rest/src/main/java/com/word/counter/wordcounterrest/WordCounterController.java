@@ -12,7 +12,7 @@ public class WordCounterController {
 
     private final WordCounter wordCounter;
 
-    @Autowired
+
     public WordCounterController() {
         this.wordCounter = new WordCounter();
     }
